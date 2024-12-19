@@ -1,6 +1,6 @@
 import uvicorn
 from fastapi import FastAPI
-from routes import customer, product, side_dish
+from kaladin.routes import customer, product, side_dish
 
 app = FastAPI()
 app.include_router(customer.router)
