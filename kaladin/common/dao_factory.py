@@ -2,6 +2,7 @@ from typing import Any
 
 from kaladin.common.database import DatabaseConnection
 from kaladin.data_access.customer_dao import CustomerReadDAO, CustomerWriteDAO
+from kaladin.data_access.order_dao import OrderReadDAO, OrderWriteDAO
 from kaladin.data_access.product_dao import ProductReadDAO, ProductWriteDAO
 from kaladin.data_access.side_dish_dao import SideDishReadDAO, SideDishWriteDAO
 
@@ -37,3 +38,11 @@ class DaoFactory:
     @property
     def side_dish_write_dao(self) -> SideDishWriteDAO:
         return SideDishWriteDAO(self._db_connection, self._secrets)
+
+    @property
+    def order_read_dao(self) -> OrderReadDAO:
+        return OrderReadDAO(self._db_connection, self._secrets)
+
+    @property
+    def order_write_dao(self) -> OrderWriteDAO:
+        return OrderWriteDAO(self._db_connection, self._secrets)
