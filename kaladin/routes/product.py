@@ -12,7 +12,7 @@ router = APIRouter(
 )
 
 
-@router.get("", response_model=list[Product])
+@router.get("", response_model=list[ProductWithSideDishes])
 async def get_all_products(
     use_cases: UseCaseFactory = Depends(build_use_case_factory)
 ):

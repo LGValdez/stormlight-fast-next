@@ -32,8 +32,9 @@ class ProductConfigurationUseCase:
         )
         self._side_dish_write_dao.insert_side_dish(side_dish)
 
-    def get_all_products(self) -> list[Product]:
-        return self._product_read_dao.fetch_all_products()
+    def get_all_products(self) -> list[ProductWithSideDishes]:
+        all_products = self._product_read_dao.fetch_all_products()
+        return [self.get_product_with_side_dishes(product.product_id) for product in all_products]
 
     def get_product(self, product_id: UUID) -> Product:
         return self._product_read_dao.fetch_product_by_id(product_id)
@@ -63,7 +64,11 @@ class ProductConfigurationUseCase:
 
     def get_product_with_side_dishes(self, product_id: UUID) -> ProductWithSideDishes:
         product = self._product_read_dao.fetch_product_by_id(product_id)
-        side_dishes = self._side_dish_read_dao.fetch_side_dish_for_product(product_id)
+
+        side_dishes = []
+        if product.max_side_dish:
+            side_dishes = self._side_dish_read_dao.fetch_side_dish_for_product(product_id)
+
         return ProductWithSideDishes(
             product_id=product_id,
             name=product.name,
